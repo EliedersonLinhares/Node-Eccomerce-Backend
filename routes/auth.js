@@ -2,10 +2,9 @@ const express = require('express')
 
 const router = express.Router()
 
-router.get('/create-or-update-user', (req, res) => {
-	res.json({
-		data: 'Test api create-or-update-user endpoint',
-	})
-})
+//import
+const { createOrUpdateUser } = require('../controllers/auth')
+
+router.get('/create-or-update-user', createOrUpdateUser)
 
 module.exports = router
