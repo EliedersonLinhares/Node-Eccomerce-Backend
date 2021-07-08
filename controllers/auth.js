@@ -6,7 +6,7 @@ exports.createOrUpdateUser = async (req, res) => {
 	//Verificando se o usario existe no BD pelo email e atualizando a imagem e o nome caso tenham sido alterados
 	const user = await User.findOneAndUpdate(
 		{ email },
-		{ name, picture },
+		{ name: email.split('@')[0], picture },
 		{ new: true }
 	)
 
@@ -16,7 +16,11 @@ exports.createOrUpdateUser = async (req, res) => {
 		res.json(user)
 	} else {
 		// senão cria um novo usuario
-		const newUser = await newUser({ name, email, picture }).save()
-		console.log('USER CREATED', newUSER)
+		const newUser = await new User({
+			email,
+			name: email.split('@')[0],
+			picture,
+		}).save()
+		console.log('USER CREATED', newUser)
 	}
 }
