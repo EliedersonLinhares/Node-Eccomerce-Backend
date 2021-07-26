@@ -14,3 +14,7 @@ exports.create = async (req, res) => {
 		})
 	}
 }
+
+exports.read = async (req, res) => {
+	res.json(await Product.find({}))
+}
