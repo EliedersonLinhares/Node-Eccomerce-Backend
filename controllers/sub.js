@@ -43,3 +43,10 @@ exports.remove = async (req, res) => {
 		res.status(400).send('Subcategory deleted failed')
 	}
 }
+
+exports.getSubs = async (req, res) => {
+	Sub.find({ parent: req.params._id }).exec((err, subs) => {
+		if (err) console.log(err)
+		res.json(subs)
+	})
+}
