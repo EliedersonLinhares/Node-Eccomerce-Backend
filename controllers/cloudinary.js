@@ -9,13 +9,12 @@ cloudinary.config({
 
 exports.upload = async (req, res) => {
 	let result = await cloudinary.uploader.upload(req.body.image, {
-		public_id: `${Date.now()}`, //name
-		resource_type: 'auto', //jpeg,png...
+		public_id: `${Date.now()}`,
+		resource_type: 'auto', // jpeg, png
 	})
-	//response
 	res.json({
 		public_id: result.public_id,
-		url: result.secure.url,
+		url: result.secure_url,
 	})
 }
 
