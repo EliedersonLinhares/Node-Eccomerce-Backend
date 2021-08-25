@@ -64,3 +64,22 @@ exports.update = async (req, res) => {
 		})
 	}
 }
+
+exports.list = async (req, res) => {
+	try {
+		//sort -> createdAt or updatedAt
+		//order -> desc or asc
+		//limit -> 3,4,5...
+		const { sort, order, limit } = req.body
+		const products = await Product.find({})
+			.populate('category')
+			.populate('subs')
+			.sort([[sort, order]])
+			.limit(limit)
+			.exec()
+
+		res.json(products)
+	} catch (errr) {
+		console.log(err)
+	}
+}
