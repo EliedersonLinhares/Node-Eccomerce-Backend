@@ -65,6 +65,8 @@ exports.update = async (req, res) => {
 	}
 }
 
+//Without pagination
+/** 
 exports.list = async (req, res) => {
 	try {
 		//sort -> createdAt or updatedAt
@@ -76,6 +78,30 @@ exports.list = async (req, res) => {
 			.populate('subs')
 			.sort([[sort, order]])
 			.limit(limit)
+			.exec()
+
+		res.json(products)
+	} catch (errr) {
+		console.log(err)
+	}
+}
+*/
+//With Pagination
+exports.list = async (req, res) => {
+	try {
+		//sort -> createdAt or updatedAt
+		//order -> desc or asc
+		//limit -> 3,4,5...
+		const { sort, order, page } = req.body
+		const currentPage = page || 1
+		const perPage = 3
+
+		const products = await Product.find({})
+			.skip((currentPage - 1) * perPage)
+			.populate('category')
+			.populate('subs')
+			.sort([[sort, order]])
+			.limit(perPage)
 			.exec()
 
 		res.json(products)
